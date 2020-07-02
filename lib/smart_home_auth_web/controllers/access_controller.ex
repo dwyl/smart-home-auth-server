@@ -11,7 +11,7 @@ defmodule SmartHomeAuthWeb.AccessController do
 
   use SmartHomeAuthWeb, :controller
 
-  def show(conn, %{"id" => id}) do
-    render(conn, "show.json", %{deviceId: id, userId: 1, hasAccess: true})
+  def show(conn, %{"id" => id, "user" => email}) do
+    render(conn, "show.json", %{doorId: id, user_email: email, hasAccess: true})
   end
 end

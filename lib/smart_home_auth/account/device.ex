@@ -7,6 +7,7 @@ defmodule SmartHomeAuth.Account.Device do
   schema "devices" do
     field :secret, :string
     field :type, :string
+    field :name, :string
 
     belongs_to :user, User
 
@@ -16,7 +17,7 @@ defmodule SmartHomeAuth.Account.Device do
   @doc false
   def changeset(device, attrs) do
     device
-    |> cast(attrs, [:type, :secret])
-    |> validate_required([:type, :secret])
+    |> cast(attrs, [:type, :secret, :name])
+    |> validate_required([:type, :secret, :name])
   end
 end

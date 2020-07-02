@@ -132,6 +132,10 @@ defmodule SmartHomeAuth.Account do
     )
   end
 
+  def hydrate_user_access(user = %User{}) do
+    Map.replace!(user, :doors, Repo.all(Ecto.assoc(user, :doors)))
+  end
+
   @doc """
   Gets a single device.
 

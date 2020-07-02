@@ -11,7 +11,7 @@ defmodule SmartHomeAuthWeb.DoorController do
     render(conn, "index.json", doors: doors)
   end
 
-  def create(conn, %{"door" => door_params}) do
+  def create(conn, %{"lock" => door_params}) do
     with {:ok, %Door{} = door} <- Access.create_door(door_params) do
       conn
       |> put_status(:created)

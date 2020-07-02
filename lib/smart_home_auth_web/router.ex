@@ -21,8 +21,8 @@ defmodule SmartHomeAuthWeb.Router do
     pipe_through :api
     pipe_through :auth
 
-    resources "/doors", DoorController, except: [:new, :edit]
-    resources "/users", UserController, except: [:new, :edit]
+    resources "/locks", DoorController, except: [:new, :edit] # Need to refractor doors to locks
+    resources "/users", UserController, except: [:new, :edit, :create, :update]
     resources "/devices", DeviceController, except: [:new, :edit]
 
   end
@@ -38,7 +38,7 @@ defmodule SmartHomeAuthWeb.Router do
     import Phoenix.LiveDashboard.Router
 
     scope "/" do
-      pipe_through [:fetch_session, :protect_from_forgery]
+      pipe_through [:fetch_session, :protect_from_forgery, :auth]
       live_dashboard "/dashboard", metrics: SmartHomeAuthWeb.Telemetry
     end
   end

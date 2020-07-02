@@ -3,12 +3,15 @@ defmodule SmartHomeAuth.Account.User do
   import Ecto.Changeset
 
   alias SmartHomeAuth.Account.Device
+  alias SmartHomeAuth.Access.Door
 
   schema "users" do
     field :email, :string
-    field :rights, :id
 
     has_many :devices, Device
+
+    many_to_many :doors, Door,
+      join_through: "keyholders"
 
     timestamps()
   end

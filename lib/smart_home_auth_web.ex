@@ -51,6 +51,14 @@ defmodule SmartHomeAuthWeb do
 
       # Include shared imports and aliases for views
       unquote(view_helpers())
+
+      def render_field_if_loaded(map, field, key) do
+        if Ecto.assoc_loaded?(field) do # Calling Ecto from a view feels wrong
+          Map.put(map, key, field)
+        else
+          map
+        end
+      end
     end
   end
 

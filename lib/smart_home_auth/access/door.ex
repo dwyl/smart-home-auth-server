@@ -9,9 +9,14 @@ defmodule SmartHomeAuth.Access.Door do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias SmartHomeAuth.Account.User
+
   schema "doors" do
     field :name, :string
     field :type, :integer
+
+    many_to_many :users, User,
+      join_through: "keyholders"
 
     timestamps()
   end
