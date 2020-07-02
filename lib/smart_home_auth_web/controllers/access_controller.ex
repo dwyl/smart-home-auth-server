@@ -11,7 +11,14 @@ defmodule SmartHomeAuthWeb.AccessController do
 
   use SmartHomeAuthWeb, :controller
 
+  alias SmartHomeAuth.Access
+  alias SmartHomeAuth.Account
+
   def show(conn, %{"id" => id, "user" => email}) do
-    render(conn, "show.json", %{doorId: id, user_email: email, hasAccess: true})
+    door = Access.get_door!(id)
+    user = Account.get_user_by_email(email)
+    access = Access.check?(door, user)
+
+    render(conn, "show.json", %{user: user.email, door_id: door.id, access: access})
   end
 end

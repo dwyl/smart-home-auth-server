@@ -13,6 +13,8 @@ defmodule SmartHomeAuthWeb.DoorView do
   def render("door.json", %{door: door}) do
     %{id: door.id,
       name: door.name,
-      type: door.type}
+      type: door.type,
+    }
+    |> render_field_if_loaded(door.users, :users)
   end
 end

@@ -7,6 +7,7 @@ defmodule SmartHomeAuth.Access do
   alias SmartHomeAuth.Repo
 
   alias SmartHomeAuth.Access.Door
+  alias SmartHomeAuth.Account.User
 
   @doc """
   Returns the list of doors.
@@ -35,7 +36,10 @@ defmodule SmartHomeAuth.Access do
       ** (Ecto.NoResultsError)
 
   """
-  def get_door!(id), do: Repo.get!(Door, id)
+  def get_door!(id) do
+    Repo.get!(Door, id)
+    |> Repo.preload(:users)
+  end
 
   @doc """
   Creates a door.
@@ -68,9 +72,19 @@ defmodule SmartHomeAuth.Access do
 
   """
   def update_door(%Door{} = door, attrs) do
+    users = get_users(attrs)
+    require Logger
+    Logger.info(inspect users)
     door
+    |> Repo.preload(:users)
     |> Door.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:users, users)
     |> Repo.update()
+  end
+
+  # TODO: Replace with Ecto query - this is really inefficient
+  defp get_users(%{"users" => users}) do
+    Enum.map(users, &Repo.get_by!(User, email: &1))
   end
 
   @doc """
@@ -100,5 +114,14 @@ defmodule SmartHomeAuth.Access do
   """
   def change_door(%Door{} = door, attrs \\ %{}) do
     Door.changeset(door, attrs)
+  end
+
+  def check?(%Door{} = door, %User{} = user) do
+    q =
+      from d in Door,
+        join: kh in "keyholders", on: kh.door_id == ^door.id,
+        where: kh.user_id == ^user.id
+
+    Repo.exists?(q)
   end
 end

@@ -11,6 +11,8 @@ defmodule SmartHomeAuth.Access.Door do
 
   alias SmartHomeAuth.Account.User
 
+  @derive {Jason.Encoder, only: [:name, :type, :id]}
+
   schema "doors" do
     field :name, :string
     field :type, :integer
@@ -27,4 +29,5 @@ defmodule SmartHomeAuth.Access.Door do
     |> cast(attrs, [:name, :type])
     |> validate_required([:name, :type])
   end
+
 end

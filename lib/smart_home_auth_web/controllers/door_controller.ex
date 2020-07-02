@@ -25,7 +25,7 @@ defmodule SmartHomeAuthWeb.DoorController do
     render(conn, "show.json", door: door)
   end
 
-  def update(conn, %{"id" => id, "door" => door_params}) do
+  def update(conn, %{"id" => id, "lock" => door_params}) do
     door = Access.get_door!(id)
 
     with {:ok, %Door{} = door} <- Access.update_door(door, door_params) do
