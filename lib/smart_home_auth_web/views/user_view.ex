@@ -13,6 +13,7 @@ defmodule SmartHomeAuthWeb.UserView do
   def render("user.json", %{user: user}) do
     %{id: user.id, email: user.email}
     |> render_field_if_loaded(user.doors, :doors)
+    |> render_field_if_loaded(user.devices, :devices)
 
   end
 end

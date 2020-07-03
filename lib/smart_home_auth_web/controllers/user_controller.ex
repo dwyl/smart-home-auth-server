@@ -13,7 +13,7 @@ defmodule SmartHomeAuthWeb.UserController do
 
   def show(conn, %{"id" => id}) do
     user =
-      Account.get_user!(id) |> Account.hydrate_user_access()
+      Account.get_user!(id) |> Account.hydrate_user_info()
     render(conn, "show.json", user: user)
   end
 

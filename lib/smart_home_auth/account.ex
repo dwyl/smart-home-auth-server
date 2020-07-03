@@ -132,8 +132,9 @@ defmodule SmartHomeAuth.Account do
     )
   end
 
-  def hydrate_user_access(user = %User{}) do
-    Map.replace!(user, :doors, Repo.all(Ecto.assoc(user, :doors)))
+  def hydrate_user_info(user = %User{}) do
+    user
+    |> Repo.preload([:devices, :doors])
   end
 
   @doc """
@@ -151,6 +152,19 @@ defmodule SmartHomeAuth.Account do
 
   """
   def get_device!(id), do: Repo.get!(Device, id)
+
+  def get_device_owner(device_id) do
+    device_id
+    |> query_device_owner()
+    |> Repo.one!()
+  end
+
+  defp query_device_owner(device_id) do
+    from u in User,
+      left_join: d in assoc(u, :devices),
+      where: d.uuid == ^device_id,
+      select: u
+  end
 
   @doc """
   Creates a device.

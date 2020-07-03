@@ -119,7 +119,7 @@ defmodule SmartHomeAuth.Access do
   def check?(%Door{} = door, %User{} = user) do
     q =
       from d in Door,
-        join: kh in "keyholders", on: kh.door_id == ^door.id,
+        join: kh in "keyholders", on: kh.door_uuid == type(^door.uuid, Ecto.UUID),
         where: kh.user_id == ^user.id
 
     Repo.exists?(q)
