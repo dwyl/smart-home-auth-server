@@ -1,7 +1,6 @@
 defmodule SmartHomeAuthWeb.DoorControllerTest do
   use SmartHomeAuthWeb.ConnCase
 
-  alias SmartHomeAuth.Access
   alias SmartHomeAuth.Access.Door
 
   @create_attrs %{
@@ -13,11 +12,6 @@ defmodule SmartHomeAuthWeb.DoorControllerTest do
     type: 2
   }
   @invalid_attrs %{name: nil, type: nil}
-
-  def fixture(:door) do
-    {:ok, door} = Access.create_door(@create_attrs)
-    door
-  end
 
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}

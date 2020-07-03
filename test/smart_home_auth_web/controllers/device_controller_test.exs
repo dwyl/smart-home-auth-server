@@ -1,7 +1,6 @@
 defmodule SmartHomeAuthWeb.DeviceControllerTest do
   use SmartHomeAuthWeb.ConnCase
 
-  alias SmartHomeAuth.Account
   alias SmartHomeAuth.Account.Device
 
   @create_attrs %{
@@ -14,12 +13,6 @@ defmodule SmartHomeAuthWeb.DeviceControllerTest do
     type: "some updated type"
   }
   @invalid_attrs %{secret: nil, type: nil}
-
-  def fixture(:device) do
-    {:ok, user} = Account.create_user(%{email: "test@example.com"})
-    {:ok, device} = Account.create_device(user, @create_attrs)
-    device
-  end
 
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}

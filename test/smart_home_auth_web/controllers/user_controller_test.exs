@@ -1,17 +1,6 @@
 defmodule SmartHomeAuthWeb.UserControllerTest do
   use SmartHomeAuthWeb.ConnCase
 
-  alias SmartHomeAuth.Account
-
-  @create_attrs %{
-    email: "some email"
-  }
-
-  def fixture(:user) do
-    {:ok, user} = Account.create_user(@create_attrs)
-    user
-  end
-
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
   end

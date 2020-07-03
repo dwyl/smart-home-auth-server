@@ -24,6 +24,8 @@ defmodule SmartHomeAuthWeb.ConnCase do
       import Phoenix.ConnTest
       import SmartHomeAuthWeb.ConnCase
 
+      import SmartHomeAuthWeb.TestHelpers
+
       alias SmartHomeAuthWeb.Router.Helpers, as: Routes
 
       # The default endpoint for testing
