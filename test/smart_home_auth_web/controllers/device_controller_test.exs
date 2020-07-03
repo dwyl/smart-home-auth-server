@@ -6,7 +6,8 @@ defmodule SmartHomeAuthWeb.DeviceControllerTest do
 
   @create_attrs %{
     secret: "some secret",
-    type: "some type"
+    name: "iPhone",
+    type: "mobile_phone"
   }
   @update_attrs %{
     secret: "some updated secret",
@@ -15,7 +16,8 @@ defmodule SmartHomeAuthWeb.DeviceControllerTest do
   @invalid_attrs %{secret: nil, type: nil}
 
   def fixture(:device) do
-    {:ok, device} = Account.create_device(@create_attrs)
+    {:ok, user} = Account.create_user(%{email: "test@example.com"})
+    {:ok, device} = Account.create_device(user, @create_attrs)
     device
   end
 
@@ -33,14 +35,13 @@ defmodule SmartHomeAuthWeb.DeviceControllerTest do
   describe "create device" do
     test "renders device when data is valid", %{conn: conn} do
       conn = post(conn, Routes.device_path(conn, :create), device: @create_attrs)
-      assert %{"id" => id} = json_response(conn, 201)["data"]
+      assert %{"uuid" => uuid} = json_response(conn, 201)["data"]
 
-      conn = get(conn, Routes.device_path(conn, :show, id))
+      conn = get(conn, Routes.device_path(conn, :show, uuid))
 
       assert %{
-               "id" => id,
-               "secret" => "some secret",
-               "type" => "some type"
+               "uuid" => uuid,
+               "type" => "mobile_phone"
              } = json_response(conn, 200)["data"]
     end
 
@@ -53,15 +54,17 @@ defmodule SmartHomeAuthWeb.DeviceControllerTest do
   describe "update device" do
     setup [:create_device]
 
-    test "renders device when data is valid", %{conn: conn, device: %Device{id: id} = device} do
-      conn = put(conn, Routes.device_path(conn, :update, device), device: @update_attrs)
-      assert %{"id" => ^id} = json_response(conn, 200)["data"]
+    test "renders device when data is valid",
+      %{conn: conn, device: %Device{uuid: uuid} = device} do
 
-      conn = get(conn, Routes.device_path(conn, :show, id))
+      conn = put(conn, Routes.device_path(conn, :update, device), device: @update_attrs)
+      assert %{"uuid" => ^uuid} = json_response(conn, 200)["data"]
+
+      conn = get(conn, Routes.device_path(conn, :show, uuid))
 
       assert %{
-               "id" => id,
-               "secret" => "some updated secret",
+               "uuid" => ^uuid,
+               "name" => name,
                "type" => "some updated type"
              } = json_response(conn, 200)["data"]
     end

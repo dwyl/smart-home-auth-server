@@ -38,6 +38,9 @@ defmodule SmartHomeAuthWeb.ConnCase do
       Ecto.Adapters.SQL.Sandbox.mode(SmartHomeAuth.Repo, {:shared, self()})
     end
 
-    {:ok, conn: Phoenix.ConnTest.build_conn()}
+    conn = Phoenix.ConnTest.build_conn()
+      |> Plug.Conn.put_req_header("authorization", Application.get_env(:smart_home_auth, :jwt))
+
+    {:ok, conn: conn}
   end
 end

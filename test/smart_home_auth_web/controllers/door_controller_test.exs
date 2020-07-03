@@ -6,11 +6,11 @@ defmodule SmartHomeAuthWeb.DoorControllerTest do
 
   @create_attrs %{
     name: "some name",
-    type: 42
+    type: 1
   }
   @update_attrs %{
     name: "some updated name",
-    type: 43
+    type: 2
   }
   @invalid_attrs %{name: nil, type: nil}
 
@@ -32,20 +32,20 @@ defmodule SmartHomeAuthWeb.DoorControllerTest do
 
   describe "create door" do
     test "renders door when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.door_path(conn, :create), door: @create_attrs)
-      assert %{"id" => id} = json_response(conn, 201)["data"]
+      conn = post(conn, Routes.door_path(conn, :create), lock: @create_attrs)
+      assert %{"uuid" => uuid} = json_response(conn, 201)["data"]
 
-      conn = get(conn, Routes.door_path(conn, :show, id))
+      conn = get(conn, Routes.door_path(conn, :show, uuid))
 
       assert %{
-               "id" => id,
+               "uuid" => uuid,
                "name" => "some name",
-               "type" => 42
+               "type" => 1
              } = json_response(conn, 200)["data"]
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post(conn, Routes.door_path(conn, :create), door: @invalid_attrs)
+      conn = post(conn, Routes.door_path(conn, :create), lock: @invalid_attrs)
       assert json_response(conn, 422)["errors"] != %{}
     end
   end
@@ -53,21 +53,21 @@ defmodule SmartHomeAuthWeb.DoorControllerTest do
   describe "update door" do
     setup [:create_door]
 
-    test "renders door when data is valid", %{conn: conn, door: %Door{id: id} = door} do
-      conn = put(conn, Routes.door_path(conn, :update, door), door: @update_attrs)
-      assert %{"id" => ^id} = json_response(conn, 200)["data"]
+    test "renders door when data is valid", %{conn: conn, door: %Door{uuid: uuid} = door} do
+      conn = put(conn, Routes.door_path(conn, :update, door), lock: @update_attrs)
+      assert %{"uuid" => ^uuid} = json_response(conn, 200)["data"]
 
-      conn = get(conn, Routes.door_path(conn, :show, id))
+      conn = get(conn, Routes.door_path(conn, :show, uuid))
 
       assert %{
-               "id" => id,
+               "uuid" => uuid,
                "name" => "some updated name",
-               "type" => 43
+               "type" => 2
              } = json_response(conn, 200)["data"]
     end
 
     test "renders errors when data is invalid", %{conn: conn, door: door} do
-      conn = put(conn, Routes.door_path(conn, :update, door), door: @invalid_attrs)
+      conn = put(conn, Routes.door_path(conn, :update, door), lock: @invalid_attrs)
       assert json_response(conn, 422)["errors"] != %{}
     end
   end
