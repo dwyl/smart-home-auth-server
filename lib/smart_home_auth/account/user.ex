@@ -13,7 +13,8 @@ defmodule SmartHomeAuth.Account.User do
     has_many :devices, Device
 
     many_to_many :doors, Door,
-      join_through: "keyholders"
+      join_through: "keyholders",
+      join_keys: [user_id: :id, door_uuid: :uuid]
 
     timestamps()
   end

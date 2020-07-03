@@ -11,14 +11,18 @@ defmodule SmartHomeAuth.Access.Door do
 
   alias SmartHomeAuth.Account.User
 
-  @derive {Jason.Encoder, only: [:name, :type, :id]}
+  @primary_key {:uuid, Ecto.UUID, autogenerate: :true}
+  @foreign_key_type Ecto.UUID
+  @derive {Phoenix.Param, key: :uuid}
+  @derive {Jason.Encoder, only: [:name, :type, :uuid]}
 
   schema "doors" do
     field :name, :string
     field :type, :integer
 
     many_to_many :users, User,
-      join_through: "keyholders"
+      join_through: "keyholders",
+      join_keys: [door_uuid: :uuid, user_id: :id]
 
     timestamps()
   end

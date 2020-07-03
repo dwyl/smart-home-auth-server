@@ -19,6 +19,6 @@ defmodule SmartHomeAuthWeb.AccessController do
     user = Account.get_user_by_email(email)
     access = Access.check?(door, user)
 
-    render(conn, "show.json", %{user: user.email, door_id: door.id, access: access})
+    render(conn, "show.json", %{user: user.email, door_id: door.uuid, access: access})
   end
 end

@@ -11,7 +11,7 @@ defmodule SmartHomeAuthWeb.DoorView do
   end
 
   def render("door.json", %{door: door}) do
-    %{id: door.id,
+    %{uuid: door.uuid,
       name: door.name,
       type: door.type,
     }

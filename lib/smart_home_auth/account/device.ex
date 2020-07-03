@@ -4,6 +4,8 @@ defmodule SmartHomeAuth.Account.Device do
 
   alias SmartHomeAuth.Account.User
 
+  @primary_key {:uuid, Ecto.UUID, autogenerate: :true}
+  @derive {Phoenix.Param, key: :uuid}
   schema "devices" do
     field :secret, :string
     field :type, :string
