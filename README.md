@@ -1,18 +1,29 @@
 <div align="center">
 
 # Smart Home Authorization Server
-A phoenix server that allows for IoT devices to check for user access
+
+A Phoenix server that allows for IoT devices to check for user access.
+
+[![Build Status](https://img.shields.io/travis/com/dwyl/smart-home-auth-server/master.svg?style=flat-square)](https://travis-ci.com/github/dwyl/smart-home-auth-server)
+[![codecov.io](https://img.shields.io/codecov/c/github/dwyl/smart-home-auth-server/master.svg?style=flat-square)](http://codecov.io/github/dwyl/smart-home-auth-server?branch=master)
+
+
 
 </div>
 
 ## Why?
+
 For our [Smart Home Security System](https://github.com/dwyl/smart-home-security-system) 
-we need to be able to indentify users and devices
-and check their access rights. This is a key part of the system and is our 'single
-source of truth.' It integrates with the Dwyl authentication system using `auth_plug`
-and stores as little personal infomation as possible.
+we need to be able to identify people and devices
+and check their access rights. 
+This is a key part of the system 
+and is our 'single source of truth.' 
+It integrates with the Dwyl authentication system using 
+[`auth_plug`](https://github.com/dwyl/auth_plug)
+and stores as little personal information as possible.
 
 ## What?
+
 This is a simple Phoenix-Based REST service made of three key parts:
 
 + **Devices**
@@ -41,8 +52,9 @@ git clone https://github.com/dwyl/smart-home-auth
 ```
 
 ### Set `AUTH_API_KEY`
-Follow the instructions [here](https://github.com/dwyl/auth_plug#2-get-your-auth_api_key-)
-to get and set your API key.
+
+Follow the 
+[instructions to get your API Key](https://github.com/dwyl/auth_plug#2-get-your-auth_api_key-)
 
 ### Run
 
