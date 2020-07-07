@@ -6,7 +6,7 @@ use Mix.Config
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
 config :smart_home_auth, SmartHomeAuth.Repo,
-  username: "tomh",
+  username: "test",
   password: "",
   database: "smart_home_auth_test#{System.get_env("MIX_TEST_PARTITION")}",
   hostname: "localhost",
