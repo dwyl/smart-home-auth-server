@@ -2,6 +2,6 @@ defmodule SmartHomeAuthWeb.AccessView do
   use SmartHomeAuthWeb, :view
 
   def render("show.json", %{user: user_email, door_id: door_id, access: access}) do
-    %{email: user_email, door_id: door_id, access: access}
+    %{email: user_email, lock_uuid: door_id, access: access}
   end
 end

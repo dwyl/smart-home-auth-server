@@ -30,4 +30,9 @@ defmodule SmartHomeAuthWeb.TestHelpers do
     door
   end
 
+  def fixture(:device, user) do
+    {:ok, device} = Account.create_device(user, @device_create_attrs)
+    device
+  end
+
 end
