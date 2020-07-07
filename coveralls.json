@@ -1,0 +1,8 @@
+{
+  "skip_files": [
+    "test/",
+    "lib/smart_home_auth/application.ex",
+    "lib/smart_home_auth_web.ex",
+    "lib/smart_home_auth_web/views/error_helpers.ex"
+  ]
+}
