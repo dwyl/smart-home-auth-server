@@ -41,7 +41,8 @@ defmodule SmartHomeAuthWeb.ConnCase do
     end
 
     conn = Phoenix.ConnTest.build_conn()
-      |> Plug.Conn.put_req_header("authorization", Application.get_env(:smart_home_auth, :jwt))
+      |> Phoenix.ConnTest.init_test_session(%{})
+      |> AuthPlug.create_jwt_session(%{email: "bob@example.com", id: 1})
 
     {:ok, conn: conn}
   end
