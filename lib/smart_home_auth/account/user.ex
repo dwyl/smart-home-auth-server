@@ -5,7 +5,7 @@ defmodule SmartHomeAuth.Account.User do
   alias SmartHomeAuth.Account.Device
   alias SmartHomeAuth.Access.Door
 
-  @derive {Jason.Encoder, only: [:email]}
+  @derive {Jason.Encoder, only: [:email, :id]}
 
   schema "users" do
     field :email, :string

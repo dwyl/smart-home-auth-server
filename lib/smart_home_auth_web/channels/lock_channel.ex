@@ -4,6 +4,7 @@ defmodule SmartHomeAuthWeb.LockChannel do
   require Logger
 
   alias SmartHomeAuth.Access
+  alias SmartHomeAuth.Account
   alias SmartHomeAuth.Access.Door
   alias SmartHomeAuthWeb.DoorView
 
@@ -18,19 +19,24 @@ defmodule SmartHomeAuthWeb.LockChannel do
     {:ok, lock, assign(socket, :lock_uuid, lock.uuid)}
   end
 
-  # Channels can be used in a request/response fashion
-  # by sending replies to requests from the client
   @impl true
-  def handle_in("ping", payload, socket) do
-    {:reply, {:ok, payload}, socket}
+  def handle_in("reset", _msg, socket) do
+    lock = Access.get_door!(socket.assigns.lock_uuid)
+    |> Phoenix.View.render_one(DoorView, "door.json")
+
+    {:reply, {:ok, lock}, socket}
   end
 
-  # It is also common to receive messages from the client and
-  # broadcast to everyone in the current topic (lock:lobby).
-  @impl true
-  def handle_in("shout", payload, socket) do
-    broadcast socket, "shout", payload
-    {:noreply, socket}
+  def handle_in("pair:complete", message, socket) do
+    result =
+      message
+      |> Map.fetch!("user") |> Map.fetch!("id")
+      |> Account.get_user!()
+      |> Account.create_device(message)
+
+    Logger.info("Completed pair, created device: #{inspect result}")
+
+    {:reply, :ok, socket}
   end
 
   defp find_or_create(lock_serial) do

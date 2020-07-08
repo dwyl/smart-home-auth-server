@@ -14,7 +14,6 @@ defmodule SmartHomeAuthWeb.Router do
   scope "/", SmartHomeAuthWeb do
     pipe_through :api
 
-    get "/handshake", HandshakeController, :show
     get "/access/:id", AccessController, :show
   end
 
@@ -25,7 +24,7 @@ defmodule SmartHomeAuthWeb.Router do
     resources "/locks", DoorController, except: [:new, :edit] # Need to refractor doors to locks
     resources "/users", UserController, except: [:new, :edit, :create, :update]
     resources "/devices", DeviceController, except: [:new, :edit]
-
+    post "/devices/pair", DeviceController, :pair
   end
 
   # Enables LiveDashboard only for development

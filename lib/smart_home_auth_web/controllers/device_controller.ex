@@ -3,6 +3,7 @@ defmodule SmartHomeAuthWeb.DeviceController do
 
   alias SmartHomeAuth.Account
   alias SmartHomeAuth.Account.Device
+  alias SmartHomeAuthWeb.Endpoint
 
   action_fallback SmartHomeAuthWeb.FallbackController
 
@@ -43,5 +44,11 @@ defmodule SmartHomeAuthWeb.DeviceController do
     with {:ok, %Device{}} <- Account.delete_device(device) do
       send_resp(conn, :no_content, "")
     end
+  end
+
+  def pair(conn, %{"lock" => lock_serial, "name" => name, "type" => type}, current_user) do
+    Endpoint.broadcast("lock:" <> lock_serial, "mode:pair", %{user: current_user, name: name, type: type})
+
+    json(conn, %{lock: lock_serial, user: current_user, status: "pairing"})
   end
 end

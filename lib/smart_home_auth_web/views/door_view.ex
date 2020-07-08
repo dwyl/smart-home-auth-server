@@ -13,7 +13,7 @@ defmodule SmartHomeAuthWeb.DoorView do
   def render("door.json", %{door: door}) do
     %{uuid: door.uuid,
       name: door.name,
-      type: door.type,
+      mode: door.type, # The locks only care about mode
       serial: door.serial
     }
     |> render_field_if_loaded(door.users, :users)
