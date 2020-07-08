@@ -11,9 +11,10 @@ defmodule SmartHomeAuthWeb.Router do
     plug SmartHomeAuthWeb.UserMapper
   end
 
-  scope "/api/v0", SmartHomeAuthWeb do
+  scope "/", SmartHomeAuthWeb do
     pipe_through :api
 
+    get "/handshake", HandshakeController, :show
     get "/access/:id", AccessController, :show
   end
 

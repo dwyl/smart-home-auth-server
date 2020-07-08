@@ -41,6 +41,10 @@ defmodule SmartHomeAuth.Access do
     |> Repo.preload(:users)
   end
 
+  def get_door_by_serial(serial) do
+    Repo.get_by(Door, serial: serial)
+  end
+
   @doc """
   Creates a door.
 

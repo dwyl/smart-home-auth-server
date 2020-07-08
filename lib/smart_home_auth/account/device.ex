@@ -9,9 +9,20 @@ defmodule SmartHomeAuth.Account.Device do
   @derive {Jason.Encoder, only: [:name, :type, :uuid]}
 
   schema "devices" do
-    field :secret, :string
-    field :type, :string
+    # The name of the device, e.g. "My iPhone"
     field :name, :string
+
+    # A shared secret for "smart" devices that is used
+    # to validate 2FA requests - could be binary?
+    field :secret, :string
+
+    # The type of the device - should be either
+    # - mobile_phone
+    # - tag
+    field :type, :string
+
+    # Used to store serial numbers of NFC tags
+    field :serial, :string
 
     belongs_to :user, User
 
@@ -21,7 +32,7 @@ defmodule SmartHomeAuth.Account.Device do
   @doc false
   def changeset(device, attrs) do
     device
-    |> cast(attrs, [:type, :secret, :name])
-    |> validate_required([:type, :secret, :name])
+    |> cast(attrs, [:type, :secret, :name, :serial])
+    |> validate_required([:type, :name])
   end
 end

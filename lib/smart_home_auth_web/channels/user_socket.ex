@@ -3,6 +3,7 @@ defmodule SmartHomeAuthWeb.UserSocket do
 
   ## Channels
   # channel "room:*", SmartHomeAuthWeb.RoomChannel
+  channel "lock:*", SmartHomeAuthWeb.LockChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
@@ -15,8 +16,16 @@ defmodule SmartHomeAuthWeb.UserSocket do
   #
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
+
+  # Sockets require a unique identifier. This can be set to anything and
+  # is just to indentify the client.
+  #
+  # We will use `name`
   @impl true
-  def connect(_params, socket, _connect_info) do
+  def connect(%{"name" => name}, socket, _connect_info) do
+    socket =
+      socket
+      |> assign(:name, name)
     {:ok, socket}
   end
 
@@ -31,5 +40,5 @@ defmodule SmartHomeAuthWeb.UserSocket do
   #
   # Returning `nil` makes this socket anonymous.
   @impl true
-  def id(_socket), do: nil
+  def id(socket), do: "user_socket:#{socket.assigns.name}"
 end

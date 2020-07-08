@@ -14,6 +14,7 @@ defmodule SmartHomeAuthWeb.DoorView do
     %{uuid: door.uuid,
       name: door.name,
       type: door.type,
+      serial: door.serial
     }
     |> render_field_if_loaded(door.users, :users)
   end
