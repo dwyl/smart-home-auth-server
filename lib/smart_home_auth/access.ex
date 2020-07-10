@@ -131,4 +131,8 @@ defmodule SmartHomeAuth.Access do
 
     Repo.exists?(q)
   end
+
+  def check?(_door, nil) do
+    false
+  end
 end

@@ -13,6 +13,8 @@ defmodule SmartHomeAuthWeb.DeviceView do
   def render("device.json", %{device: device}) do
     %{uuid: device.uuid,
       type: device.type,
-      name: device.name}
+      name: device.name,
+      serial: device.serial
+    }
   end
 end

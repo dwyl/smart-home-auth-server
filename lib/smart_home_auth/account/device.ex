@@ -6,7 +6,7 @@ defmodule SmartHomeAuth.Account.Device do
 
   @primary_key {:uuid, Ecto.UUID, autogenerate: :true}
   @derive {Phoenix.Param, key: :uuid}
-  @derive {Jason.Encoder, only: [:name, :type, :uuid]}
+  @derive {Jason.Encoder, only: [:name, :type, :serial]}
 
   schema "devices" do
     # The name of the device, e.g. "My iPhone"

@@ -39,6 +39,15 @@ defmodule SmartHomeAuthWeb.LockChannel do
     {:reply, :ok, socket}
   end
 
+  # Handle an access request
+  def handle_in("access:request", %{"uuid" => uuid, "device" => device_uuid}, socket) do
+    door = Access.get_door!(uuid)
+    user = Account.get_device_owner(device_uuid)
+    access = Access.check?(door, user)
+
+    {:reply, {:ok, %{user: user, access: access}}, socket}
+  end
+
   defp find_or_create(lock_serial) do
     case Access.get_door_by_serial(lock_serial) do
       %Access.Door{} = door ->

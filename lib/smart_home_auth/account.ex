@@ -153,16 +153,16 @@ defmodule SmartHomeAuth.Account do
   """
   def get_device!(id), do: Repo.get!(Device, id)
 
-  def get_device_owner(device_id) do
-    device_id
+  def get_device_owner(device_serial) do
+    device_serial
     |> query_device_owner()
-    |> Repo.one!()
+    |> Repo.one()
   end
 
   defp query_device_owner(device_id) do
     from u in User,
       left_join: d in assoc(u, :devices),
-      where: d.uuid == ^device_id,
+      where: d.serial == ^device_id,
       select: u
   end
 
