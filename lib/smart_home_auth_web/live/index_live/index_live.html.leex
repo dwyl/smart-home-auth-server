@@ -1,0 +1,17 @@
+<h2>Live Home status </h2>
+<table>
+  <thead>
+    <th>Device</th>
+    <th>Serial</th>
+    <th>Status</th>
+  </thead>
+  <tbody>
+  <%= for node <- @current do %>
+    <tr>
+      <td><%= node[:name] %></td>
+      <td><%= node[:serial] %></td>
+      <td class="<%= node[:status] %>"><%= node[:status] %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

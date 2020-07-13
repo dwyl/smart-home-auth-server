@@ -7,6 +7,7 @@ defmodule SmartHomeAuthWeb.LockChannel do
   alias SmartHomeAuth.Account
   alias SmartHomeAuth.Access.Door
   alias SmartHomeAuthWeb.DoorView
+  alias SmartHomeAuthWeb.Presence
 
   @impl true
   def join("lock:" <> lock_serial, _payload, socket) do
@@ -16,7 +17,20 @@ defmodule SmartHomeAuthWeb.LockChannel do
       |> Phoenix.View.render_one(DoorView, "door.json")
 
     Logger.info("#{lock.serial} has come online")
-    {:ok, lock, assign(socket, :lock_uuid, lock.uuid)}
+
+    send(self(), :after_join)
+
+    {:ok, lock, assign(socket, :lock, lock)}
+  end
+
+  @impl true
+  def handle_info(:after_join, socket) do
+    {:ok, _} = Presence.track(self(), "nodes", socket.assigns.name, %{
+      name: socket.assigns.name,
+      online_at: inspect(System.system_time(:second))
+    })
+
+    {:noreply, socket}
   end
 
   @impl true
@@ -40,9 +54,9 @@ defmodule SmartHomeAuthWeb.LockChannel do
   end
 
   # Handle an access request
-  def handle_in("access:request", %{"uuid" => uuid, "device" => device_uuid}, socket) do
+  def handle_in("access:request", %{"uuid" => uuid, "device" => device_serial}, socket) do
     door = Access.get_door!(uuid)
-    user = Account.get_device_owner(device_uuid)
+    user = Account.get_device_owner(device_serial)
     access = Access.check?(door, user)
 
     {:reply, {:ok, %{user: user, access: access}}, socket}

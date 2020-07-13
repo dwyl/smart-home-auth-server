@@ -13,6 +13,8 @@ defmodule SmartHomeAuth.Application do
       SmartHomeAuthWeb.Telemetry,
       # Start the PubSub system
       {Phoenix.PubSub, name: SmartHomeAuth.PubSub},
+      # Start our presence tracker
+      SmartHomeAuthWeb.Presence,
       # Start the Endpoint (http/https)
       SmartHomeAuthWeb.Endpoint
       # Start a worker by calling: SmartHomeAuth.Worker.start_link(arg)

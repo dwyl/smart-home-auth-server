@@ -14,7 +14,7 @@ config :smart_home_auth,
 config :smart_home_auth, SmartHomeAuthWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "rQXicHfajoynUJ/rk4Ve5lb5dYEV5G0PwVMCY63yrn5xAU+QIC3jgI7YM1VvHSOL",
-  render_errors: [view: SmartHomeAuthWeb.ErrorView, accepts: ~w(json), layout: false],
+  render_errors: [view: SmartHomeAuthWeb.ErrorView, accepts: ~w(html son), layout: false],
   pubsub_server: SmartHomeAuth.PubSub,
   live_view: [signing_salt: "yxPL93gA"]
 

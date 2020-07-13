@@ -27,3 +27,13 @@ smart_home_auth-*.tar
 # this depending on your deployment strategy.
 /priv/static/
 .env
+
+npm-debug.log
+
+# The directory NPM downloads your dependencies sources to.
+/assets/node_modules/
+
+# Since we are building assets from assets/,
+# we ignore priv/static. You may want to comment
+# this depending on your deployment strategy.
+/priv/static/
