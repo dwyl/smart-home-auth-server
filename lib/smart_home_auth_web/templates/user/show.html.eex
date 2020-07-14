@@ -11,5 +11,5 @@
 <ul>
 <%= for door <- @user.doors do %>
   <li> <%= door.serial %> </li>
-<%= end %>
+<% end %>
 </ul>

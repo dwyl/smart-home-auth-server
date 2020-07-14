@@ -35,4 +35,12 @@ defmodule SmartHomeAuth.Account.Device do
     |> cast(attrs, [:type, :secret, :name, :serial])
     |> validate_required([:type, :name])
   end
+
+  def change_pair(pair, attrs) do
+    types = %{lock: :string, name: :string, type: :string}
+
+    {pair, types}
+    |> cast(attrs, Map.keys(types))
+    |> validate_required(Map.keys(types))
+  end
 end

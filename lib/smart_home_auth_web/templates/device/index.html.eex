@@ -3,7 +3,10 @@
 
 
   <div class="float-left"><h2>Your devices</h2></div>
-  <div class="float-right"><a class="button" href="#">Pair new</a></div>
+  <div class="float-right">
+    <%= link "Pair Device", to: Routes.device_path(@conn, :new_pair),
+      class: "button" %>
+  </div>
 
 </div>
 

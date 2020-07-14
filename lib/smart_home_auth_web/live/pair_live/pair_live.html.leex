@@ -1,0 +1,5 @@
+<%= case @status do %>
+<% :waiting -> %><h2>Waiting for card tap...</h2>
+<% :complete -> %><h3>Card with ID: <%= Map.get(@payload, "serial") %> registered.
+You can now close this tab </h3>
+<% end %>

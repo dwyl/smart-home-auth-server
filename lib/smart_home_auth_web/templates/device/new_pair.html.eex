@@ -1,0 +1,32 @@
+<h2>Pair a device to your account. </h2>
+<p>Pair a NFC tag or similar to your account so you can use it to access Home.</p>
+
+<p>Before getting started, make sure your near a card reader and have a new card
+to scan. Make sure you know the <strong>name</strong> of the card reader.</p>
+
+<br>
+
+<h3>Step 1: Fill in some details about the device </h3>
+
+<%= form_for @pair, Routes.device_path(@conn, :create_pair), [as: :pair], fn f -> %>
+
+<%= label f, :name, "Friendly name for your device" %>
+<%= text_input f, :name, placeholder: "My key fob" %>
+<%= error_tag f, :name %>
+
+<%= label f, :type, "The type of device" %>
+<%= select f, :type, ["tag"], prompt: "Device Type" %>
+<%= error_tag f, :type %>
+
+<h3>Step 2: Pick where you want to pair the device</h3>
+
+<%= label f, :lock, "Where do you want to pair the device?" %>
+<%= select f, :lock, pairing_device_select_options(@locks), prompt: "Pairing Device" %>
+<%= error_tag f, :lock %>
+
+<h3>Step 3: Begin the pairing process</h3>
+
+<div>
+  <%= submit "Start pairing" %>
+</div>
+<% end %>

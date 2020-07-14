@@ -26,9 +26,15 @@ defmodule SmartHomeAuthWeb.Router do
     pipe_through :browser
 
     live "/", IndexLive
+
+    get "/devices/pair", DeviceController, :new_pair
+    post "/devices/pair", DeviceController, :create_pair
+
     resources "/locks", DoorController, except: [:new, :edit]
     resources "/users", UserController
     resources "/devices", DeviceController, except: [:new]
+
+
     get "/access/:id", AccessController, :show
   end
 

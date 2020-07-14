@@ -1,0 +1,9 @@
+<h2>Pair a device to your account.</h2>
+
+<h3>Step 4: Touch device to reader</h3>
+
+<p>Please touch your new card to the reader on <%= @pair_data.lock %></p>
+
+<br>
+
+<%= live_render(@conn, SmartHomeAuthWeb.PairLive, session: %{"lock" => @pair_data.lock}) %>

@@ -17,4 +17,8 @@ defmodule SmartHomeAuthWeb.DeviceView do
       serial: device.serial
     }
   end
+
+  def pairing_device_select_options(locks) do
+    for l <- locks, do: {l.name, l.serial}
+  end
 end

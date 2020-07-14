@@ -35,13 +35,14 @@ defmodule SmartHomeAuthWeb.LockChannel do
 
   @impl true
   def handle_in("reset", _msg, socket) do
-    lock = Access.get_door!(socket.assigns.lock_uuid)
+    lock = Access.get_door!(socket.assigns.lock.uuid)
     |> Phoenix.View.render_one(DoorView, "door.json")
 
-    {:reply, {:ok, lock}, socket}
+    {:reply, {:ok, lock}, assign(socket, :lock, lock)}
   end
 
-  def handle_in("pair:complete", message, socket) do
+  def handle_in("pair:complete" = event, message, socket) do
+    broadcast_from(socket, event, message) # In case anyone is listening
     result =
       message
       |> Map.fetch!("user") |> Map.fetch!("id")

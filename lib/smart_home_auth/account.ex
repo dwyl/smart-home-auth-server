@@ -237,4 +237,8 @@ defmodule SmartHomeAuth.Account do
   def change_device(%Device{} = device, attrs \\ %{}) do
     Device.changeset(device, attrs)
   end
+
+  def change_pair(pair, attrs \\ %{}) do
+    Device.change_pair(pair, attrs)
+  end
 end

@@ -3,10 +3,16 @@ defmodule SmartHomeAuthWeb.DeviceController do
 
   alias SmartHomeAuth.Account
   alias SmartHomeAuth.Account.Device
+  alias SmartHomeAuth.Access
   alias SmartHomeAuthWeb.Endpoint
 
   action_fallback SmartHomeAuthWeb.FallbackController
 
+  plug :load_locks when action in [:new_pair, :create_pair, :pair]
+
+  defp load_locks(conn, _) do
+    assign(conn, :locks, Access.list_doors())
+  end
 
   def index(conn, _params, current_user) do
     devices = Account.list_user_devices(current_user)
@@ -61,6 +67,32 @@ defmodule SmartHomeAuthWeb.DeviceController do
     end
   end
 
+  def new_pair(conn, _params, _current_user) do
+    pair = Account.change_pair(%{})
+
+    render(conn, "new_pair.html", pair: pair)
+  end
+
+  def create_pair(conn,
+    %{"pair" => pair_data}, current_user) do
+
+    change = Account.change_pair(%{}, pair_data)
+
+    case Ecto.Changeset.apply_action(change, :update) do
+      {:ok, %{lock: lock_serial, name: name, type: type}} ->
+        pair_data = %{lock: lock_serial, user: current_user, name: name, type: type}
+        Endpoint.broadcast("lock:" <> lock_serial, "mode:pair", pair_data)
+
+        render(conn, "create_pair.html", pair_data: pair_data)
+
+      {:error, changeset} ->
+        render(conn, "new_pair.html", pair: changeset)
+    end
+  end
+
+  # API method, leaving this here for now.
+  # Trying to write a common pair function seems like a backward step in
+  # code readability.
   def pair(conn, %{"lock" => lock_serial, "name" => name, "type" => type}, current_user) do
     Endpoint.broadcast("lock:" <> lock_serial, "mode:pair", %{user: current_user, name: name, type: type})
 
