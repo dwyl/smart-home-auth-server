@@ -1,2 +1,1 @@
-<p>Non-live content </p>
 <%= @inner_content %>

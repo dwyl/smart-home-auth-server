@@ -1,0 +1,35 @@
+
+<div class="clearfix">
+
+
+  <div class="float-left"><h2>Your devices</h2></div>
+  <div class="float-right"><a class="button" href="#">Pair new</a></div>
+
+</div>
+
+<p>These are your devices or NFC tags that have been paired to your
+account.</p>
+
+<br>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Serial</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  <%= for device <- @devices do %>
+    <tr>
+      <td><a href="<%= Routes.device_path(@conn, :edit, device) %>"> <%= device.name %> </a></td>
+      <td> <%= device.type %> </td>
+      <td> <%= device.serial %> </td>
+      <td><%= link "Delete", to: Routes.device_path(@conn, :delete, device),
+        method: :delete %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

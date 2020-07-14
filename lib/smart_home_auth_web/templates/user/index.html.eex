@@ -1,0 +1,20 @@
+<h2>Users known to Smart Home.</h2>
+<p>These are users that have been added to a lock manually or
+have authenticated themselves. </p>
+
+<p>Deleting a user will remove their Devices and access. It will not
+delete the upstream user in Auth.
+</p>
+
+<br>
+
+<table>
+  <%= for user <- @users do %>
+    <tr>
+      <td><%= user.email %> (admin)</td>
+      <td> <a class="button" href="<%= Routes.user_path(@conn, :show, user) %>">
+        View
+      </a></td>
+    </tr>
+    <% end %>
+</table>

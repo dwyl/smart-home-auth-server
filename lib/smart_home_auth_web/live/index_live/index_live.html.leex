@@ -1,4 +1,5 @@
-<h2>Live Home status </h2>
+<h2>Live home status </h2>
+<h3>Network Devices</h3>
 <table>
   <thead>
     <th>Device</th>
@@ -15,3 +16,14 @@
   <% end %>
   </tbody>
 </table>
+
+<br>
+
+<h3>Live log</h3>
+
+<%= if Enum.empty?(@events) do %>
+<p>No events yet </p>
+<% end %>
+<%= for event <- @events do %>
+  <p><strong><%= event.from %></strong> <%= event.message %> </p>
+<% end %>

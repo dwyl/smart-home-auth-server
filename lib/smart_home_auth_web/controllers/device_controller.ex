@@ -10,7 +10,7 @@ defmodule SmartHomeAuthWeb.DeviceController do
 
   def index(conn, _params, current_user) do
     devices = Account.list_user_devices(current_user)
-    render(conn, "index.json", devices: devices)
+    render(conn, :index, devices: devices)
   end
 
   @doc """
@@ -21,20 +21,31 @@ defmodule SmartHomeAuthWeb.DeviceController do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.device_path(conn, :show, device))
-      |> render("show.json", device: device)
+      |> render(:show, device: device)
     end
+  end
+
+  def edit(conn, %{"id" => uuid}, current_user) do
+    device = Account.get_user_device!(current_user, uuid)
+    changeset = Account.change_device(device)
+
+    render(conn, "edit.html", device: device, changeset: changeset)
   end
 
   def show(conn, %{"id" => id}, _) do
     device = Account.get_device!(id)
-    render(conn, "show.json", device: device)
+    render(conn, :show, device: device)
   end
 
   def update(conn, %{"id" => id, "device" => device_params}, _) do
     device = Account.get_device!(id)
 
     with {:ok, %Device{} = device} <- Account.update_device(device, device_params) do
-      render(conn, "show.json", device: device)
+      if get_format(conn) == "html" do
+        redirect(conn, to: Routes.device_path(conn, :index))
+      else
+        render(conn, :show, device: device)
+      end
     end
   end
 
@@ -42,7 +53,11 @@ defmodule SmartHomeAuthWeb.DeviceController do
     device = Account.get_device!(id)
 
     with {:ok, %Device{}} <- Account.delete_device(device) do
-      send_resp(conn, :no_content, "")
+      if get_format(conn) == "html" do
+        redirect(conn, to: Routes.device_path(conn, :index))
+      else
+        send_resp(conn, :no_content, "")
+      end
     end
   end
 

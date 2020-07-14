@@ -4,14 +4,17 @@ defmodule SmartHomeAuthWeb.IndexLive do
   alias SmartHomeAuthWeb.Presence
   alias SmartHomeAuth.Access
 
+  require Logger
+
   @presence_topic "nodes"
 
   def mount(_params, _session, socket) do
     SmartHomeAuthWeb.Endpoint.subscribe(@presence_topic)
 
     current = get_devices()
+    SmartHomeAuthWeb.Endpoint.subscribe("events")
 
-    {:ok, assign(socket, current: current)}
+    {:ok, assign(socket, current: current, events: [])}
   end
 
   def handle_info(%{event: "presence_diff", payload: _payload}, socket) do
@@ -20,8 +23,10 @@ defmodule SmartHomeAuthWeb.IndexLive do
     {:noreply, assign(socket, current: current)}
   end
 
-  def render_status(:online) do
+  def handle_info(%{event: "event", payload: event}, socket) do
+    old_events = socket.assigns.events
 
+    {:noreply, assign(socket, events: [event | old_events])}
   end
 
   def get_devices() do

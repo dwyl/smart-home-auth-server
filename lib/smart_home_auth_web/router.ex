@@ -2,7 +2,7 @@ defmodule SmartHomeAuthWeb.Router do
   use SmartHomeAuthWeb, :router
 
   pipeline :browser do
-    plug :accepts, ["html"]
+    plug :accepts, ["json", "html"]
     plug :fetch_session
     plug :fetch_live_flash
     plug :protect_from_forgery
@@ -26,6 +26,9 @@ defmodule SmartHomeAuthWeb.Router do
     pipe_through :browser
 
     live "/", IndexLive
+    resources "/locks", DoorController, except: [:new, :edit]
+    resources "/users", UserController
+    resources "/devices", DeviceController, except: [:new]
     get "/access/:id", AccessController, :show
   end
 

@@ -1,0 +1,15 @@
+<h2> Viewing <%= @user.email %> </h2>
+
+<h3>Owns devices: </h3>
+<ul>
+<%= for device <- @user.devices do%>
+  <li><%= device.name %> - <%= device.serial %></li>
+<% end %>
+</ul>
+
+<h3>Has access to: </h3>
+<ul>
+<%= for door <- @user.doors do %>
+  <li> <%= door.serial %> </li>
+<%= end %>
+</ul>

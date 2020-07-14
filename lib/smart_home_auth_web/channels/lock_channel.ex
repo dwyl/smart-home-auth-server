@@ -62,6 +62,13 @@ defmodule SmartHomeAuthWeb.LockChannel do
     {:reply, {:ok, %{user: user, access: access}}, socket}
   end
 
+  def handle_in("event", event, socket) do
+    SmartHomeAuthWeb.Endpoint.broadcast_from!(self(), "events", "event",
+      %{from: socket.assigns.name, message: event})
+
+    {:reply, :ok, socket}
+  end
+
   defp find_or_create(lock_serial) do
     case Access.get_door_by_serial(lock_serial) do
       %Access.Door{} = door ->

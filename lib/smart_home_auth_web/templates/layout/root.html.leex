@@ -10,9 +10,27 @@
     <script defer type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </head>
   <body>
-  <h1> Dwyl Smart Home </h1>
+  <header>
+      <section class="container">
+        <nav role="navigation">
+          <ul>
+            <%= if @current_user do %>
+            <li> <%= @current_user.email %> </li>
+            <li> <%= link "My Devices", to: Routes.device_path(@conn, :index) %> </li>
+            <% end %>
+          </ul>
+        </nav>
+        <h1> <%= link "Dwyl Smart Home", to: Routes.live_path(@conn, SmartHomeAuthWeb.IndexLive) %></h1>
+      </section>
+    </header>
     <div class="container">
+    <br>
+    <p> admin: <a href="<%= Routes.user_path(@conn, :index)%>">users</a> ·
+      <a href="<%= Routes.door_path(@conn, :index)%>">locks</a>
+    </p>
+    <br>
     <%= @inner_content %>
+
     </div>
   </body>
 </html>

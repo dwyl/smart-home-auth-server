@@ -8,7 +8,7 @@ defmodule SmartHomeAuthWeb.DoorController do
 
   def index(conn, _params) do
     doors = Access.list_doors()
-    render(conn, "index.json", doors: doors)
+    render(conn, :index, doors: doors)
   end
 
   def create(conn, %{"lock" => door_params}) do

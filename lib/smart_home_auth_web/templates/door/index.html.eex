@@ -1,0 +1,24 @@
+<h2> All registered nodes </h2>
+
+<p>These are all devices that have registered with the hub
+on the network. If you don't see the correct device please make
+sure it is configured correctly.</p>
+
+<br>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Serial</th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for door <- @doors do %>
+  <tr>
+    <td><%= door.name %></td>
+    <td><%= door.serial %> </td>
+  </tr>
+<% end %>
+</tbody>
+</table>

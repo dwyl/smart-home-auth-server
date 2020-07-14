@@ -153,6 +153,12 @@ defmodule SmartHomeAuth.Account do
   """
   def get_device!(id), do: Repo.get!(Device, id)
 
+  def get_user_device!(%User{} = user, uuid) do
+    Device
+    |> query_user_devices(user)
+    |> Repo.get!(uuid)
+  end
+
   def get_device_owner(device_serial) do
     device_serial
     |> query_device_owner()
