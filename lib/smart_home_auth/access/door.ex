@@ -21,6 +21,7 @@ defmodule SmartHomeAuth.Access.Door do
     field :type, :integer
     field :serial, :string
     field :feature_flags, {:array, :string}
+    field :config, :map
 
     many_to_many :users, User,
       join_through: "keyholders",
@@ -32,7 +33,7 @@ defmodule SmartHomeAuth.Access.Door do
   @doc false
   def changeset(door, attrs) do
     door
-    |> cast(attrs, [:name, :type, :serial, :feature_flags])
+    |> cast(attrs, [:name, :type, :serial, :feature_flags, :config])
     |> validate_required([:serial])
   end
 

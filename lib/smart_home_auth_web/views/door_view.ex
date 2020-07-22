@@ -15,7 +15,8 @@ defmodule SmartHomeAuthWeb.DoorView do
       name: door.name,
       mode: door.type, # The locks only care about mode
       feature_flags: door.feature_flags,
-      serial: door.serial
+      serial: door.serial,
+      config: door.config
     }
     |> render_field_if_loaded(door.users, :users)
   end

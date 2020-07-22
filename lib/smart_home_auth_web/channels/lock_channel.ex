@@ -30,6 +30,8 @@ defmodule SmartHomeAuthWeb.LockChannel do
       online_at: inspect(System.system_time(:second))
     })
 
+    features_subscribe(socket.lock.feature_flags, socket)
+
     {:noreply, socket}
   end
 
@@ -79,5 +81,14 @@ defmodule SmartHomeAuthWeb.LockChannel do
           door
         end
     end
+  end
+
+  defp features_subscribe(features, socket) do
+    Enum.each(features, &feature_subscribe(&1, socket))
+  end
+
+  def feature_subscribe("display", socket) do
+    master = socket.log.config["display_master"]
+    SmartHomeAuthWeb.Endpoint.subscribe("event:" <> master)
   end
 end
