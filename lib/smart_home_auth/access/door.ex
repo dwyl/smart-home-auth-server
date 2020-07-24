@@ -1,9 +1,7 @@
 defmodule SmartHomeAuth.Access.Door do
   @moduledoc """
-  Defines the schema for a simple door.
+  Defines the schema for nodes that connect to the hub
 
-  `Name`: The name of the door
-  `Type`: The type of the door
   """
 
   use Ecto.Schema
@@ -21,6 +19,10 @@ defmodule SmartHomeAuth.Access.Door do
     field :type, :integer
     field :serial, :string
     field :feature_flags, {:array, :string}
+
+    # Config should be used to store data associated with feature_flags.
+    # Any relationship data should be in a new field instead.
+    # This will be passed to the devices themselves to read
     field :config, :map
 
     many_to_many :users, User,

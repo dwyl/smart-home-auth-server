@@ -25,7 +25,7 @@ defmodule SmartHomeAuthWeb.IndexLive do
 
   def handle_info(%{event: "event", payload: event}, socket) do
     old_events = socket.assigns.events
-
+    Logger.info(inspect event)
     {:noreply, assign(socket, events: [event | old_events])}
   end
 

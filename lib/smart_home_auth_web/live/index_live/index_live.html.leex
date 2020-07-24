@@ -25,5 +25,14 @@
 <p>No events yet </p>
 <% end %>
 <%= for event <- @events do %>
-  <p><strong><%= event.from %></strong> <%= event.message %> </p>
+  <p><strong><%= event.from %></strong>
+  <%= case event[:message] do %>
+    <% %{"access" => true, "user" => user} -> %>
+      <%= user["email"] %> granted access.
+    <% %{"access" => false} -> %>
+      Access denied.
+    <% _ -> %>
+      Unknown event: <%= inspect(event["message"]) %>
+  <% end %>
+   </p>
 <% end %>
