@@ -2,8 +2,8 @@ use Mix.Config
 
 # Configure your database
 config :smart_home_auth, SmartHomeAuth.Repo,
-  username: "tomh",
-  password: "",
+  username: "postgres",
+  password: "postgres",
   database: "smart_home_auth_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
