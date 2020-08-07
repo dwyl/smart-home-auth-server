@@ -22,6 +22,7 @@ defmodule SmartHomeAuthWeb.ChannelCase do
       # Import conveniences for testing with channels
       import Phoenix.ChannelTest
       import SmartHomeAuthWeb.ChannelCase
+      import SmartHomeAuth.TestHelpers
 
       # The default endpoint for testing
       @endpoint SmartHomeAuthWeb.Endpoint

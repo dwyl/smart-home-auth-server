@@ -6,33 +6,29 @@ defmodule SmartHomeAuth.AccessTest do
   describe "doors" do
     alias SmartHomeAuth.Access.Door
 
-    @valid_attrs %{name: "some name", type: 1}
     @update_attrs %{name: "some updated name", type: 2}
-    @invalid_attrs %{name: nil, type: nil}
+    @invalid_attrs %{serial: nil}
 
-    def door_fixture(attrs \\ %{}) do
-      {:ok, door} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Access.create_door()
-
-      door
-    end
 
     test "list_doors/0 returns all doors" do
-      door = door_fixture()
+      door = fixture(:door)
       assert Access.list_doors() == [door]
     end
 
     test "get_door!/1 returns the door with given id" do
-      door = door_fixture()
+      door = fixture(:door)
       assert Access.get_door!(door.uuid).uuid == door.uuid
     end
 
     test "create_door/1 with valid data creates a door" do
-      assert {:ok, %Door{} = door} = Access.create_door(@valid_attrs)
+      attrs = @update_attrs
+        |> Map.put(:serial, "lock-9999")
+        |> Map.put(:name, "some name")
+        |> Map.put(:feature_flags, [])
+
+      assert {:ok, %Door{} = door} = Access.create_door(attrs)
       assert door.name == "some name"
-      assert door.type == 1
+      assert door.type == 2
     end
 
     test "create_door/1 with invalid data returns error changeset" do
@@ -40,26 +36,26 @@ defmodule SmartHomeAuth.AccessTest do
     end
 
     test "update_door/2 with valid data updates the door" do
-      door = door_fixture()
+      door = fixture(:door)
       assert {:ok, %Door{} = door} = Access.update_door(door, @update_attrs)
       assert door.name == "some updated name"
       assert door.type == 2
     end
 
     test "update_door/2 with invalid data returns error changeset" do
-      door = door_fixture()
+      door = fixture(:door)
       assert {:error, %Ecto.Changeset{}} = Access.update_door(door, @invalid_attrs)
       assert door.name == Access.get_door!(door.uuid).name
     end
 
     test "delete_door/1 deletes the door" do
-      door = door_fixture()
+      door = fixture(:door)
       assert {:ok, %Door{}} = Access.delete_door(door)
       assert_raise Ecto.NoResultsError, fn -> Access.get_door!(door.uuid) end
     end
 
     test "change_door/1 returns a door changeset" do
-      door = door_fixture()
+      door = fixture(:door)
       assert %Ecto.Changeset{} = Access.change_door(door)
     end
   end

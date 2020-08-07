@@ -5,13 +5,15 @@ defmodule SmartHomeAuthWeb.DoorControllerTest do
 
   @create_attrs %{
     name: "some name",
-    type: 1
+    type: 1,
+    serial: "lock-1234",
+    feature_flags: []
   }
   @update_attrs %{
     name: "some updated name",
     type: 2
   }
-  @invalid_attrs %{name: nil, type: nil}
+  @invalid_attrs %{serial: nil}
 
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
@@ -34,7 +36,7 @@ defmodule SmartHomeAuthWeb.DoorControllerTest do
       assert %{
                "uuid" => uuid,
                "name" => "some name",
-               "type" => 1
+               "mode" => 1
              } = json_response(conn, 200)["data"]
     end
 
@@ -56,7 +58,7 @@ defmodule SmartHomeAuthWeb.DoorControllerTest do
       assert %{
                "uuid" => uuid,
                "name" => "some updated name",
-               "type" => 2
+               "mode" => 2
              } = json_response(conn, 200)["data"]
     end
 
