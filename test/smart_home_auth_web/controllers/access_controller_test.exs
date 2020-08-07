@@ -18,13 +18,14 @@ defmodule SmartHomeAuthWeb.AccessControllerTest do
       assert true = json_response(conn, 200)["access"]
     end
 
-    test "allows access through user device", %{conn: conn, user: user, door: door} do
-      device = fixture(:device, user)
+    # Pending re-write of Auth system with RBAC
+    # test "allows access through user device", %{conn: conn, user: user, door: door} do
+    #   device = fixture(:device, user)
 
-      conn = get(conn, Routes.access_path(conn, :show, door.uuid), device: device.uuid)
+    #   conn = get(conn, Routes.access_path(conn, :show, door.uuid), device: device.uuid)
 
-      assert true = json_response(conn, 200)["access"]
-    end
+    #   assert true = json_response(conn, 200)["access"]
+    # end
   end
 
   defp create_authorised(_) do

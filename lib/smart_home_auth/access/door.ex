@@ -36,7 +36,7 @@ defmodule SmartHomeAuth.Access.Door do
   def changeset(door, attrs) do
     door
     |> cast(attrs, [:name, :type, :serial, :feature_flags, :config])
-    |> validate_required([:serial])
+    |> validate_required([:serial, :feature_flags])
   end
 
 end

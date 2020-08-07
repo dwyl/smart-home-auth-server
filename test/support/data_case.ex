@@ -24,6 +24,7 @@ defmodule SmartHomeAuth.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import SmartHomeAuth.DataCase
+      import SmartHomeAuth.TestHelpers
     end
   end
 

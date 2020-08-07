@@ -1,4 +1,4 @@
-defmodule SmartHomeAuthWeb.TestHelpers do
+defmodule SmartHomeAuth.TestHelpers do
 
   alias SmartHomeAuth.Account
   alias SmartHomeAuth.Access
@@ -12,7 +12,9 @@ defmodule SmartHomeAuthWeb.TestHelpers do
 
   @door_create_attrs %{
     name: "some name",
-    type: 1
+    serial: "lock-1234",
+    type: 1,
+    feature_flags: ["lock"]
   }
 
   def fixture(:user) do

@@ -2,22 +2,15 @@ defmodule SmartHomeAuthWeb.LockChannelTest do
   use SmartHomeAuthWeb.ChannelCase
 
   setup do
+    serial = "lock-1234"
+
+    lock = fixture(:door)
+
     {:ok, _, socket} =
       SmartHomeAuthWeb.UserSocket
-      |> socket("user_id", %{some: :assign})
-      |> subscribe_and_join(SmartHomeAuthWeb.LockChannel, "lock:lobby")
-
-    %{socket: socket}
-  end
-
-  test "ping replies with status ok", %{socket: socket} do
-    ref = push socket, "ping", %{"hello" => "there"}
-    assert_reply ref, :ok, %{"hello" => "there"}
-  end
-
-  test "shout broadcasts to lock:lobby", %{socket: socket} do
-    push socket, "shout", %{"hello" => "all"}
-    assert_broadcast "shout", %{"hello" => "all"}
+      |> socket("user_id", %{name: "lock-1234"})
+      |> subscribe_and_join(SmartHomeAuthWeb.LockChannel, "lock:" <> serial)
+    %{socket: socket, lock: lock}
   end
 
   test "broadcasts are pushed to the client", %{socket: socket} do
