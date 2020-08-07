@@ -2,18 +2,23 @@ defmodule SmartHomeAuthWeb.Router do
   use SmartHomeAuthWeb, :router
 
   pipeline :browser do
-    plug :accepts, ["json", "html"]
+    plug :accepts, ["html", "json"]
     plug :fetch_session
-    plug :fetch_live_flash
+    plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug :put_root_layout, {SmartHomeAuthWeb.LayoutView, :root}
     plug AuthPlug, %{auth_url: "https://dwylauth.herokuapp.com"}
     plug SmartHomeAuthWeb.UserMapper
   end
 
   pipeline :api do
     plug :accepts, ["json"]
+  end
+
+  pipeline :live_routes do
+    plug :browser
+    plug :fetch_live_flash
+    plug :put_root_layout, {SmartHomeAuthWeb.LayoutView, :app}
   end
 
   pipeline :auth do
@@ -23,9 +28,14 @@ defmodule SmartHomeAuthWeb.Router do
   end
 
   scope "/", SmartHomeAuthWeb do
-    pipe_through :browser
+    pipe_through :live_routes
 
     live "/", IndexLive
+  end
+
+  scope "/", SmartHomeAuthWeb do
+    pipe_through :browser
+
 
     get "/devices/pair", DeviceController, :new_pair
     post "/devices/pair", DeviceController, :create_pair
