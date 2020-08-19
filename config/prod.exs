@@ -11,7 +11,7 @@ use Mix.Config
 # before starting your production server.
 config :smart_home_auth, SmartHomeAuthWeb.Endpoint,
   http: [port: {:system, "PORT"}],
-  url: [scheme: "https", host: "dwylauth.herokuapp.com", port: 443],
+  url: [scheme: "https", host: "smart-home-auth-server.herokuapp.com", port: 443],
   force_ssl: [rewrite_on: [:x_forwarded_proto]],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
