@@ -13,12 +13,12 @@ A Phoenix server that allows for IoT devices to check for user access.
 
 ## Why?
 
-For our [Smart Home Security System](https://github.com/dwyl/smart-home-security-system) 
+For our [Smart Home Security System](https://github.com/dwyl/smart-home-security-system)
 we need to be able to identify people and devices
-and check their access rights. 
-This is a key part of the system 
-and is our 'single source of truth.' 
-It integrates with the Dwyl authentication system using 
+and check their access rights.
+This is a key part of the system
+and is our 'single source of truth.'
+It integrates with the Dwyl authentication system using
 [`auth_plug`](https://github.com/dwyl/auth_plug)
 and stores as little personal information as possible.
 
@@ -27,7 +27,7 @@ and stores as little personal information as possible.
 This is a simple Phoenix-Based REST service made of three key parts:
 
 + **Devices**
-  
+
   Devices can be added and removed from the system. They can be NFC tags or more
   complicated devices like phones. These devices are automatically associated with
   the logged in user.
@@ -36,7 +36,7 @@ This is a simple Phoenix-Based REST service made of three key parts:
 
   (Called *doors* internally - we should refractor this at some point).
 
-  Add locks to the system and add or remove users access to them. Locks are 
+  Add locks to the system and add or remove users access to them. Locks are
   uniquely identified and associated with users through the `keyholders` table.
 
 + **Access**
@@ -53,7 +53,7 @@ git clone https://github.com/dwyl/smart-home-auth
 
 ### Set `AUTH_API_KEY`
 
-Follow the 
+Follow the
 [instructions to get your API Key](https://github.com/dwyl/auth_plug#2-get-your-auth_api_key-)
 
 ### Run
@@ -61,15 +61,17 @@ Follow the
 To start the Phoenix server:
 
   * Install dependencies with `mix deps.get`
-  * Edit database config in `config/dev.exs` 
+  * Edit database config in `config/dev.exs`
   * Create and migrate your database with `mix ecto.setup`
   * Start Phoenix endpoint with `mix phx.server`
 
 
-## Development
+## API Development
 
-`insomnia.json` is an export of the [Insomnia](https://insomnia.rest)
-workspace I'm currently using to develop the API.
+[`insomnia.json`](https://github.com/dwyl/smart-home-auth-server/blob/master/insomnia.json)
+is an export of the [Insomnia](https://insomnia.rest)
+workspace used to develop the API.
 It should have most routes and authentication configured.
 
-I recommend using Insomnia for development.
+We recommend using Insomnia for development,
+see: https://github.com/dwyl/learn-insomnia

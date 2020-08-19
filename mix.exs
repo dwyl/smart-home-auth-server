@@ -5,7 +5,7 @@ defmodule SmartHomeAuth.MixProject do
     [
       app: :smart_home_auth,
       version: "0.1.0",
-      elixir: "~> 1.7",
+      elixir: "~> 1.10.3",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -49,7 +49,7 @@ defmodule SmartHomeAuth.MixProject do
       {:floki, ">= 0.0.0", only: :test},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:auth_plug, git: "https://github.com/dwyl/auth_plug", branch: "master"},
+      {:auth_plug, "~> 1.2.1"},
 
       {:excoveralls, "~> 0.10", only: :test}
     ]
