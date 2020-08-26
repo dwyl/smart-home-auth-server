@@ -18,7 +18,7 @@ defmodule SmartHomeAuth do
         "id" => 1,
         "email" => "test@example.com",
         "auth_provider" => "local-dev",
-        "given_name" => "Dev Superuser"
+        "givenName" => "Dev Superuser"
       })
   end
 end
