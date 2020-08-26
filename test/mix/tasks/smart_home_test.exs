@@ -2,8 +2,6 @@ defmodule Mix.Tasks.SmartHomeTest do
   use ExUnit.Case
   import ExUnit.CaptureIO
 
-  require Logger
-
   @jwt_pattern ~r/[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+\/=]*$/m
 
   test "Mix task returns a valid JWT" do
