@@ -1,0 +1,33 @@
+version: '3'
+
+services: 
+  hub:
+    build:
+      context: .
+    environment: 
+      - AUTH_API_KEY
+      - DATABASE_URL=psql://postgres:postgres@db:5432
+    ports: 
+      - "4000:4000"
+    volumes: 
+     - .:/app
+     - deps:/app/deps
+     - build_cache:/app/_build
+     - node_cache:/app/assets/node_modules
+    depends_on: 
+      - db
+  
+  db:
+    image: "postgres:latest"
+    volumes: 
+      - db-data:/var/lib/postgres/data/
+    environment: 
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    restart: always
+    
+volumes: 
+  db-data:
+  deps:
+  build_cache:
+  node_cache:
