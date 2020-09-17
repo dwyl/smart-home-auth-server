@@ -19,6 +19,7 @@ defmodule SmartHomeAuth.Access.Door do
     field :type, :integer
     field :serial, :string
     field :feature_flags, {:array, :string}
+    field :roles, {:array, :integer}
 
     # Config should be used to store data associated with feature_flags.
     # Any relationship data should be in a new field instead.
@@ -35,7 +36,7 @@ defmodule SmartHomeAuth.Access.Door do
   @doc false
   def changeset(door, attrs) do
     door
-    |> cast(attrs, [:name, :type, :serial, :feature_flags, :config])
+    |> cast(attrs, [:name, :type, :serial, :feature_flags, :config, :roles])
     |> validate_required([:serial, :feature_flags])
   end
 
