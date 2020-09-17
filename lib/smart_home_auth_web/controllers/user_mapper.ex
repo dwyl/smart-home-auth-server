@@ -20,7 +20,9 @@ defmodule SmartHomeAuthWeb.UserMapper do
 
       # First check user_email is not nil to avoid any weird errors
       user = user_email && Account.get_user_by_email(user_email) ->
-        put_current_user(conn, user)
+        conn
+        |> sync_user_roles(user) # Sync as often as possible
+        |> put_current_user(user)
 
       # If we can't find a record in our database, make one
       {:ok, user} = user_email && Account.create_user(%{email: user_email}) ->
@@ -31,6 +33,14 @@ defmodule SmartHomeAuthWeb.UserMapper do
       true ->
         assign(conn, :current_user, nil)
     end
+  end
+
+  defp sync_user_roles(%{assigns: %{person: %{roles: roles}}} = conn, user) do
+    unless Enum.sort(roles) == Enum.sort(user.roles) do
+      # Update our user roles.
+      Account.update_user(user, %{roles: roles})
+    end
+    conn
   end
 
   defp put_current_user(conn, user) do

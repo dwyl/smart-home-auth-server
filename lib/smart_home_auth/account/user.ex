@@ -9,6 +9,7 @@ defmodule SmartHomeAuth.Account.User do
 
   schema "users" do
     field :email, :string
+    field :roles, {:array, :integer}
 
     has_many :devices, Device
 
