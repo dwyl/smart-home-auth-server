@@ -25,7 +25,9 @@ defmodule SmartHomeAuthWeb.UserMapper do
         |> put_current_user(user)
 
       # If we can't find a record in our database, make one
-      {:ok, user} = user_email && Account.create_user(%{email: user_email}) ->
+      {:ok, user} = user_email &&
+        Account.create_user(%{email: user_email, roles: conn.assigns.person.roles}) ->
+
         put_current_user(conn, user)
 
       # I don't *think* we want to crash here, so lets pretend everythings fine
