@@ -23,7 +23,7 @@ defmodule SmartHomeAuth.Account.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:email])
-    |> validate_required([:email])
+    |> cast(attrs, [:email, :roles])
+    |> validate_required([:email, :roles])
   end
 end
