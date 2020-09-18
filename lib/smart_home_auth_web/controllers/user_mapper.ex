@@ -8,12 +8,13 @@ defmodule SmartHomeAuthWeb.UserMapper do
   """
   import Plug.Conn
   alias SmartHomeAuth.Account
+  require Logger
 
   def init(opts), do: opts
 
   def call(conn, _opts) do
     user_email = conn.assigns.person.email
-
+    Logger.debug(inspect conn.assigns.person)
     cond do
       conn.assigns[:current_user] -> # Bypass for testing
         conn
@@ -26,7 +27,9 @@ defmodule SmartHomeAuthWeb.UserMapper do
 
       # If we can't find a record in our database, make one
       {:ok, user} = user_email &&
-        Account.create_user(%{email: user_email, roles: conn.assigns.person.roles}) ->
+        Account.create_user(%{
+          email: user_email,
+          roles: RBAC.parse_role_string(conn.assigns.person.roles)}) ->
 
         put_current_user(conn, user)
 
@@ -40,7 +43,7 @@ defmodule SmartHomeAuthWeb.UserMapper do
   defp sync_user_roles(%{assigns: %{person: %{roles: roles}}} = conn, user) do
     unless Enum.sort(roles) == Enum.sort(user.roles) do
       # Update our user roles.
-      Account.update_user(user, %{roles: roles})
+      Account.update_user(user, %{roles: RBAC.parse_role_string(roles)})
     end
     conn
   end
