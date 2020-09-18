@@ -14,7 +14,6 @@ defmodule SmartHomeAuthWeb.UserMapper do
 
   def call(conn, _opts) do
     user_email = conn.assigns.person.email
-    Logger.debug(inspect conn.assigns.person)
     cond do
       conn.assigns[:current_user] -> # Bypass for testing
         conn
@@ -41,9 +40,10 @@ defmodule SmartHomeAuthWeb.UserMapper do
   end
 
   defp sync_user_roles(%{assigns: %{person: %{roles: roles}}} = conn, user) do
-    unless Enum.sort(roles) == Enum.sort(user.roles) do
+    parsed_roles = RBAC.parse_role_string(roles)
+    unless Enum.sort(parsed_roles) == Enum.sort(user.roles) do
       # Update our user roles.
-      Account.update_user(user, %{roles: RBAC.parse_role_string(roles)})
+      Account.update_user(user, %{roles: parsed_roles})
     end
     conn
   end
