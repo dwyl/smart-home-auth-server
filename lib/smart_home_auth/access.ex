@@ -76,22 +76,10 @@ defmodule SmartHomeAuth.Access do
 
   """
   def update_door(%Door{} = door, attrs) do
-    users = get_users(attrs)
 
     door
-    |> Repo.preload(:users)
     |> Door.changeset(attrs)
-    |> Ecto.Changeset.put_assoc(:users, users)
     |> Repo.update()
-  end
-
-  # TODO: Replace with Ecto query - this is really inefficient
-  defp get_users(%{"users" => users}) do
-    Enum.map(users, &Repo.get_by!(User, email: &1))
-  end
-
-  defp get_users (_) do
-    []
   end
 
   @doc """
