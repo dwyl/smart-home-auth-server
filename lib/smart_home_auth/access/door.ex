@@ -12,7 +12,7 @@ defmodule SmartHomeAuth.Access.Door do
   @primary_key {:uuid, Ecto.UUID, autogenerate: :true}
   @foreign_key_type Ecto.UUID
   @derive {Phoenix.Param, key: :uuid}
-  @derive {Jason.Encoder, only: [:serial]}
+  @derive {Jason.Encoder, only: [:serial, :roles]}
 
   schema "doors" do
     field :name, :string
