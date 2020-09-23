@@ -21,6 +21,11 @@ defmodule SmartHomeAuth.Application do
       # {SmartHomeAuth.Worker, arg}
     ]
 
+    RBAC.init_roles_cache(
+      "https://dwylauth.herokuapp.com",
+      AuthPlug.Token.client_id()
+    )
+
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: SmartHomeAuth.Supervisor]

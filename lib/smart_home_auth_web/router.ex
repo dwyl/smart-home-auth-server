@@ -40,7 +40,7 @@ defmodule SmartHomeAuthWeb.Router do
     get "/devices/pair", DeviceController, :new_pair
     post "/devices/pair", DeviceController, :create_pair
 
-    resources "/locks", DoorController, except: [:new, :edit]
+    resources "/locks", DoorController, except: [:new]
     resources "/users", UserController
     resources "/devices", DeviceController, except: [:new]
 

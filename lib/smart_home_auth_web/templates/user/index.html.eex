@@ -1,9 +1,8 @@
 <h2>Users known to Smart Home.</h2>
-<p>These are users that have been added to a lock manually or
-have authenticated themselves. </p>
+<p>These users have logged into smart home at some point.</p>
 
-<p>Deleting a user will remove their Devices and access. It will not
-delete the upstream user in Auth.
+<p>Deleting a user will remove their registered devices, but <b>not</b> their
+roles, to do this visit <a href="https://dwylauth.herokuapp.com">Auth</a>
 </p>
 
 <br>

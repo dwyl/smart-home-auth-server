@@ -123,4 +123,11 @@ defmodule SmartHomeAuth.Access do
   def check?(_door, nil) do
     false
   end
+
+  @doc """
+  Returns a list of all availiable feature flags
+  """
+  def all_flags do
+    ["display", "lock"]
+  end
 end

@@ -1,0 +1,26 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Something went wrong, please check any errors</p>
+    </div>
+  <% end %>
+
+  <%= label f, :name %>
+  <%= text_input f, :name %>
+
+  <label for="serial">Serial</label>
+  <p><%= @door.serial %> </p>
+
+  <%= label f, :feature_flags %>
+  <%= for flag <- SmartHomeAuth.Access.all_flags() do %>
+    <div class="checkbox_select">
+      <%= flag %>:
+      <input
+        name="door[feature_flags][]" type="checkbox" value="<%= flag %>"
+        <%= if Enum.member?(@door.feature_flags, flag), do: "checked" %>
+      >
+    </div>
+  <% end %>
+
+<script src='<%= Routes.static_path(@conn, "/js/lock.js") %>'></script>
+<% end %>
