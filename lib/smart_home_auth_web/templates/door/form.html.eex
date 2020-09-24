@@ -28,7 +28,7 @@
   <div id="display">
     <br>
     <h4>Display config </h4>
-    <%= label f, :display, "Display driver serial" %>
+    <%= label f, :display, "Not yet implemented, please use API" %>
     <%= text_input f, :display  %>
   </div>
 
@@ -44,6 +44,10 @@
         <%= if Enum.member?(@door.roles, id), do: "checked" %>
       >
     <% end %>
+  </div>
+
+  <div>
+    <%= submit "Save" %>
   </div>
 
 <% end %>

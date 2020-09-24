@@ -32,11 +32,14 @@ defmodule SmartHomeAuthWeb.DoorController do
     render(conn, "edit.html", door: door, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "lock" => door_params}) do
+  def update(conn, %{"id" => id, "door" => door_params}) do
     door = Access.get_door!(id)
 
     with {:ok, %Door{} = door} <- Access.update_door(door, door_params) do
-      render(conn, :show, door: door)
+      case get_format(conn) do
+        "html" -> redirect(conn, to: Routes.door_path(conn, :index))
+        _ -> render(conn, :show, door)
+      end
     end
   end
 
