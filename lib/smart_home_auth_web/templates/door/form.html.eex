@@ -5,6 +5,8 @@
     </div>
   <% end %>
 
+  <h4>Device config</h4>
+
   <%= label f, :name %>
   <%= text_input f, :name %>
 
@@ -22,5 +24,28 @@
     </div>
   <% end %>
 
-<script src='<%= Routes.static_path(@conn, "/js/lock.js") %>'></script>
+
+  <div id="display">
+    <br>
+    <h4>Display config </h4>
+    <%= label f, :display, "Display driver serial" %>
+    <%= text_input f, :display  %>
+  </div>
+
+  <div id="lock">
+    <br>
+    <h4>Lock config</h4>
+    <%= label f, :roles, "Allowed roles" %>
+
+    <%= for %{name: name, id: id} <- get_all_roles() do %>
+      <%= name %>:
+      <input
+        name="door[roles][]" type="checkbox" value="<%= id %>"
+        <%= if Enum.member?(@door.roles, id), do: "checked" %>
+      >
+    <% end %>
+  </div>
+
 <% end %>
+
+<script src='<%= Routes.static_path(@conn, "/js/lock.js") %>'></script>

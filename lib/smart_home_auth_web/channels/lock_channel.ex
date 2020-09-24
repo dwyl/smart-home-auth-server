@@ -104,6 +104,7 @@ defmodule SmartHomeAuthWeb.LockChannel do
         with {:ok, %Door{} = door} <- Access.create_door(%{
           "serial" => lock_serial,
           "feature_flags" => [],
+          "name" => "new" <> lock_serial
           }) do
           door
         end

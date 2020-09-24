@@ -19,7 +19,7 @@ defmodule SmartHomeAuth.Access.Door do
     field :type, :integer
     field :serial, :string
     field :feature_flags, {:array, :string}
-    field :roles, {:array, :integer}
+    field :roles, {:array, :integer}, default: []
 
     # Config should be used to store data associated with feature_flags.
     # Any relationship data should be in a new field instead.

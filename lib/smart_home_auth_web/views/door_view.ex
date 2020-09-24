@@ -21,4 +21,8 @@ defmodule SmartHomeAuthWeb.DoorView do
     }
     |> render_field_if_loaded(door.users, :users)
   end
+
+  def get_all_roles() do
+    RBAC.list_approles()
+  end
 end
