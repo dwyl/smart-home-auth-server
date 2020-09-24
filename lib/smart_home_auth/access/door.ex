@@ -16,7 +16,7 @@ defmodule SmartHomeAuth.Access.Door do
 
   schema "doors" do
     field :name, :string
-    field :type, :integer
+    field :type, :integer # 1: Low sec/internal , 2: High sec/external
     field :serial, :string
     field :feature_flags, {:array, :string}
     field :roles, {:array, :integer}, default: []

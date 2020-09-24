@@ -111,13 +111,18 @@ defmodule SmartHomeAuth.Access do
     Door.changeset(door, attrs)
   end
 
-  def check?(%Door{} = door, %User{} = user) do
-    q =
-      from d in Door,
-        join: kh in "keyholders", on: kh.door_uuid == type(^door.uuid, Ecto.UUID),
-        where: kh.user_id == ^user.id
+  @doc """
+  Check if a user is allowed to have access to a door.
 
-    Repo.exists?(q)
+  Fetches new roles from server for high security type "2" doors
+  """
+  def check?(%Door{type: 1} = door, %User{} = user) do
+    user.roles
+    |> Enum.any?(&Enum.member?(door.roles, &1)) # O(n^2) unfortunatly...
+  end
+
+  def check?(%Door{type: 2} = door, %User{} = user) do
+    false
   end
 
   def check?(_door, nil) do
