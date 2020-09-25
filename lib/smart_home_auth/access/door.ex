@@ -18,13 +18,13 @@ defmodule SmartHomeAuth.Access.Door do
     field :name, :string
     field :type, :integer # 1: Low sec/internal , 2: High sec/external
     field :serial, :string
-    field :feature_flags, {:array, :string}
+    field :feature_flags, {:array, :string}, default: []
     field :roles, {:array, :integer}, default: []
 
     # Config should be used to store data associated with feature_flags.
     # Any relationship data should be in a new field instead.
     # This will be passed to the devices themselves to read
-    field :config, :map
+    field :config, :map, default: %{}
 
     many_to_many :users, User,
       join_through: "keyholders",
