@@ -27,6 +27,10 @@ defmodule SmartHomeAuthWeb.Router do
     plug SmartHomeAuthWeb.UserMapper
   end
 
+  pipeline :admin_only do
+    plug :only_role, "admin"
+  end
+
   scope "/", SmartHomeAuthWeb do
     pipe_through :live_routes
 
@@ -36,16 +40,19 @@ defmodule SmartHomeAuthWeb.Router do
   scope "/", SmartHomeAuthWeb do
     pipe_through :browser
 
-
     get "/devices/pair", DeviceController, :new_pair
     post "/devices/pair", DeviceController, :create_pair
 
-    resources "/locks", DoorController, except: [:new]
-    resources "/users", UserController
     resources "/devices", DeviceController, except: [:new]
 
-
     get "/access/:id", AccessController, :show
+  end
+
+  scope "/manage", SmartHomeAuthWeb do
+    pipe_through [:browser, :admin_only]
+
+    resources "/locks", DoorController, except: [:new]
+    resources "/users", UserController
   end
 
   scope "/api/v0", SmartHomeAuthWeb do

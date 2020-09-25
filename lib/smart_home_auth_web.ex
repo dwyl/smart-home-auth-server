@@ -71,6 +71,7 @@ defmodule SmartHomeAuthWeb do
       import Phoenix.LiveView.Router
       import Plug.Conn
       import Phoenix.Controller
+      import SmartHomeAuthWeb.RBACAuth
     end
   end
 
