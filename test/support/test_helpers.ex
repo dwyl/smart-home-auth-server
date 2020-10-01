@@ -18,7 +18,7 @@ defmodule SmartHomeAuth.TestHelpers do
   }
 
   def fixture(:user) do
-    {:ok, user} = Account.create_user(%{email: "test@example.com"})
+    {:ok, user} = Account.create_user(%{email: "test@example.com", roles: [1, 2]})
     user
   end
 

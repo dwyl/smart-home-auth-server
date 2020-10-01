@@ -3,7 +3,7 @@ defmodule SmartHomeAuth.AccountTest do
 
   alias SmartHomeAuth.Account
 
-  @account_valid_attrs %{email: "bob@example.com"}
+  @account_valid_attrs %{email: "bob@example.com", roles: [1, 2]}
 
   def user_fixture(attrs \\ %{}) do
     {:ok, user} =
