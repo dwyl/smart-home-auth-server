@@ -13,7 +13,6 @@ defmodule SmartHomeAuthWeb.DoorView do
   end
 
   def render("door.json", %{door: door}) do
-    Logger.error("Rendering...")
     %{uuid: door.uuid,
       name: door.name,
       mode: door.type, # The locks only care about mode
