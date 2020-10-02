@@ -42,7 +42,7 @@ defmodule SmartHomeAuthWeb.ConnCase do
 
     conn = Phoenix.ConnTest.build_conn()
       |> Phoenix.ConnTest.init_test_session(%{})
-      |> AuthPlug.create_jwt_session(%{email: "bob@example.com", id: 1})
+      |> AuthPlug.create_jwt_session(%{email: "bob@example.com", id: 1, roles: "1,2,3"})
 
     {:ok, conn: conn}
   end

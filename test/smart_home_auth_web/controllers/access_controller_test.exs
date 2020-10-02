@@ -32,7 +32,7 @@ defmodule SmartHomeAuthWeb.AccessControllerTest do
     door = fixture(:door)
     user = fixture(:user)
 
-    {:ok, door} = Access.update_door(door, %{"users" => [user.email]})
+    {:ok, door} = Access.update_door(door, %{"roles" => [1, 2]})
 
     %{user: user, door: door}
   end
