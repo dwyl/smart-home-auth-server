@@ -50,6 +50,7 @@ defmodule SmartHomeAuth.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:auth_plug, "~> 1.2.1"},
+      {:rbac, "~>0.5.2"},
 
       {:excoveralls, "~> 0.10", only: :test}
     ]

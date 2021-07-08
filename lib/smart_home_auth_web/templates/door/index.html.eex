@@ -16,7 +16,7 @@ sure it is configured correctly.</p>
   <tbody>
 <%= for door <- @doors do %>
   <tr>
-    <td><%= door.name %></td>
+    <td><%= link door.name, to: Routes.door_path(@conn, :edit, door)%></td>
     <td><%= door.serial %> </td>
   </tr>
 <% end %>

@@ -25,9 +25,12 @@
     </header>
     <div class="container">
     <br>
-    <p> admin: <a href="<%= Routes.user_path(@conn, :index)%>">users</a> ·
-      <a href="<%= Routes.door_path(@conn, :index)%>">locks</a>
-    </p>
+    <%= if RBAC.has_role_any?(@conn, ["admin"]) do %>
+      <p> admin: <a href="<%= Routes.user_path(@conn, :index)%>">users</a> ·
+        <a href="<%= Routes.door_path(@conn, :index)%>">locks</a>
+      </p>
+    <% end %>
+    <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
     <br>
     <%= @inner_content %>
 

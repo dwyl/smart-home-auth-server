@@ -56,7 +56,8 @@ defmodule SmartHomeAuthWeb.LockChannel do
     door = Access.get_door!(uuid)
     user = Account.get_device_owner(device_serial)
     access = Access.check?(door, user)
-
+    broadcast!(socket, "unlock", device_serial)
+    Process.send_after(self(), {:lock, device_serial}, 5_000)
     {:reply, {:ok, %{user: user, access: access}}, socket}
   end
 
@@ -104,6 +105,7 @@ defmodule SmartHomeAuthWeb.LockChannel do
         with {:ok, %Door{} = door} <- Access.create_door(%{
           "serial" => lock_serial,
           "feature_flags" => [],
+          "name" => "new" <> lock_serial
           }) do
           door
         end
